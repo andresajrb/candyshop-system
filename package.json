@@ -1,15 +1,14 @@
 {
-  "name": "inventario-ventas",
-  "version": "1.0.0",
-  "description": "Aplicacion de inventario y ventas creada por Andres Reyes",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Andres Reyes",
-  "license": "ISC",
-  "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.17.0"
-  }
+    "name": "inventario-ventas",
+    "version": "1.0.0",
+    "description": "Aplicacion de inventario y ventas creada por Andres Reyes",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Andres Reyes",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.0"
+    }
 }
