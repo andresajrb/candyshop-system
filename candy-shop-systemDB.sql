@@ -15,9 +15,9 @@ CREATE TABLE `users` (
   `password` varchar(100) COLLATE utf8_spanish_ci NOT NULL DEFAULT '123456',
   `name` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `role` varchar(100) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'USER',
+  `datereg` date DEFAULT NULL,
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que almacena los usuarios del sistema';
-
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que almacena los usuarios del sistema'
 
 
 --
@@ -36,10 +36,11 @@ CREATE TABLE `providers` (
   `identityp` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `isactive` char(1) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'Y',
   `userreg` int(11) NOT NULL,
+  `datereg` date DEFAULT NULL,
   PRIMARY KEY (`providerid`),
   KEY `providers_users_fk` (`userreg`),
   CONSTRAINT `providers_users_fk` FOREIGN KEY (`userreg`) REFERENCES `users` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los proveedores';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los proveedores'
 
 
 --
@@ -55,11 +56,11 @@ CREATE TABLE `clients` (
   `phone` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `email` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
   `userreg` int(11) DEFAULT NULL,
+  `datereg` date DEFAULT NULL,
   PRIMARY KEY (`clientid`),
   KEY `clients_users_fk` (`userreg`),
   CONSTRAINT `clients_users_fk` FOREIGN KEY (`userreg`) REFERENCES `users` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los clientes';
-
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los clientes'
 
 --
 -- Table structure for table `products`
@@ -75,13 +76,13 @@ CREATE TABLE `products` (
   `isactive` char(1) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'Y',
   `providerid` int(11) DEFAULT NULL,
   `userreg` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`productid`),
   KEY `products_fk` (`providerid`),
   KEY `products_users_fk` (`userreg`),
   CONSTRAINT `products_fk` FOREIGN KEY (`providerid`) REFERENCES `providers` (`providerid`),
   CONSTRAINT `products_users_fk` FOREIGN KEY (`userreg`) REFERENCES `users` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los productos';
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los productos'
 
 --
 -- Table structure for table `hsale`
