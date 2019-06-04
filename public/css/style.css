@@ -116,7 +116,7 @@ img {
     font-size: 16px;
     font-weight: 500;
     text-align: left;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     letter-spacing: 1px;
     float: left;
     width: 85%;
@@ -212,7 +212,7 @@ span .fa {
     font-size: 15px;
     font-weight: 500;
     text-align: center;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     letter-spacing: 2px;
     padding: 5em 0 0;
     color: #fff;

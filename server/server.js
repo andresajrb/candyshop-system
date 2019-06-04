@@ -34,7 +34,8 @@ app.post('/logging', function(req, res) {
     login.autentication(logging.username, logging.password).then(mensaje => {
         res.status(200).json({
             ok: true,
-            message: mensaje
+            message: mensaje,
+            url: 'http://localhost:3000/admin'
         });
 
     }, (err) => {
@@ -54,6 +55,12 @@ app.post('/logging', function(req, res) {
     });
 
 
+});
+
+
+app.get('/admin', function(req, res) {
+
+    res.sendFile(path.join(__dirname, "../public", "admin.html"));
 });
 
 module.exports = app;

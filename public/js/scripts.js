@@ -30,7 +30,7 @@ function loginUsuario() {
                 return;
             }
             closeError();
-            alert(response.message);
+            renderAdmin(response.url);
 
 
         }
@@ -43,4 +43,9 @@ function loginUsuario() {
 
 function closeError() {
     document.getElementById('errorbar').style.display = 'none';
+}
+
+function renderAdmin(url) {
+
+    window.location.replace(url)
 }
