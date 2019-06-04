@@ -77,6 +77,8 @@ CREATE TABLE `products` (
   `providerid` int(11) DEFAULT NULL,
   `userreg` int(11) NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT '0',
+  `datereg` date DEFAULT NULL,
+  `dateentry` date DEFAULT NULL,
   PRIMARY KEY (`productid`),
   KEY `products_fk` (`providerid`),
   KEY `products_users_fk` (`userreg`),
