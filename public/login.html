@@ -13,6 +13,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Magnificent login form a Flat Responsive Widget,Login form widgets, Sign up Web 	forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
 
+    <!-- Bootstrap style -->
+    <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
     <!-- Meta tag Keywords -->
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <!--stylesheet-css-->
@@ -22,9 +24,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!--online fonts-->
     <!-- <link href="//fonts.googleapis.com/css?family=Raleway" rel="stylesheet"> -->
     <!--online fonts -->
+
 </head>
 
 <body>
+    <div class="alert alert-danger alert-dismissible fade collapse" role="alert" id="errorbar">
+        <strong id="message">Usuario o contraseña invalida</strong>
+        <button type="button" class="close" id="btnClose" onclick="closeError()">
+                  <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="w3ls-main">
         <div class="wthree-heading">
             <h1>CShop System</h1>
@@ -34,23 +43,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="agileits-2">
                     <h2>login</h2>
                 </div>
-                <form action="#" method="post">
-                    <div class="w3-user">
-                        <span><i class="fa fa-user-o" aria-hidden="true"></i></span>
-                        <input type="text" name="Username" placeholder="Username" required="">
-                    </div>
-                    <div class="clear"></div>
-                    <div class="w3-psw">
-                        <span><i class="fa fa-key" aria-hidden="true"></i></span>
-                        <input type="password" name="password" placeholder="Password" required="">
-                    </div>
-                    <div class="clear"></div>
-                    <div class="clear"></div>
-                    <div class="w3l-submit">
-                        <input type="submit" value="login">
-                    </div>
-                    <div class="clear"></div>
-                </form>
+                <!-- <form action="#" method="post"> -->
+                <div class="w3-user">
+                    <span><i class="fa fa-user-o" aria-hidden="true"></i></span>
+                    <input type="text" name="Username" placeholder="Username" required="" id="username">
+                </div>
+                <div class="clear"></div>
+                <div class="w3-psw">
+                    <span><i class="fa fa-key" aria-hidden="true"></i></span>
+                    <input type="password" name="password" placeholder="Password" required="" id="password">
+                </div>
+                <div class="clear"></div>
+                <div class="clear"></div>
+                <div class="w3l-submit">
+                    <input id="login" type="submit" value="login">
+                </div>
+                <div class="clear"></div>
+
+
+                <!-- </form> -->
             </div>
         </div>
     </div>
@@ -59,6 +70,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
 
 
+    <script src="./js/scripts.js"></script>
+    <script src="js/jquery.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+    <script src="js/bootstrap.js"></script>
 </body>
 
 </html>

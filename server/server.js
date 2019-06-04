@@ -34,7 +34,7 @@ app.post('/logging', function(req, res) {
     login.autentication(logging.username, logging.password).then(mensaje => {
         res.status(200).json({
             ok: true,
-            mensaje: mensaje
+            message: mensaje
         });
 
     }, (err) => {
@@ -42,14 +42,14 @@ app.post('/logging', function(req, res) {
         if (err != false) {
             res.status(200).json({
                 ok: true,
-                mensaje: 'Error DB, llame al departamento de sistemas'
+                message: 'Error DB, llame al departamento de sistemas'
             });
             return console.log(err);
         }
 
-        res.status(401).json({
+        res.status(200).json({
             ok: false,
-            mensaje: 'No se encontro el usuario requerido'
+            message: 'No se encontro el usuario requerido'
         })
     });
 
