@@ -1,13 +1,19 @@
 let connection = require('./connection');
 
-let login = {
-    // True - Encontro el usuario solicitado  False - No se encontro el usuario solicitadoS
-    autentication: function(username, password) {
+let product = {
+    find: function(id) {
 
         return new Promise((resolve, reject) => {
 
-            connection.query('SELECT * FROM `inventario-ventas`.USERS WHERE USERNAME = "' +
-                username + '" AND PASSWORD = "' + password + '"',
+            let query;
+
+            if (id) {
+                query = 'SELECT * FROM `inventario-ventas`.PRODUCTS WHERE PRODUCTID = ' + id.trim();
+            } else {
+                query = 'SELECT * FROM `inventario-ventas`.PRODUCTS ';
+            }
+
+            connection.query(query,
 
                 (err, resultset, fields) => {
                     if (err) {
@@ -24,9 +30,12 @@ let login = {
                     resolve(result);
                 });
 
+
+
         });
 
     }
 }
 
-module.exports = login;
+
+module.exports = product;

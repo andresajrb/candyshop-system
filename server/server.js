@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const login = require('../data/login');
+const product = require('../data/product');
 
 
 app.use(express.static(path.join(__dirname, '../public')));
@@ -13,12 +14,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+// Init Applicaton
 app.get('/', function(req, res) {
 
     res.sendFile(path.join(__dirname, "../public", "login.html"));
 });
 
-
+// Loggin
 app.post('/logging', function(req, res) {
 
     let body = req.body;
@@ -61,6 +63,25 @@ app.post('/logging', function(req, res) {
 app.get('/admin', function(req, res) {
 
     res.sendFile(path.join(__dirname, "../public", "admin.html"));
+});
+
+//CRUD PRODUCTS
+app.get('/product/find', function(req, res) {
+
+    let id = req.query.id;
+
+    product.find(id).then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+
 });
 
 module.exports = app;
