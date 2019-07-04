@@ -70,7 +70,7 @@ app.get('/product/find', function(req, res) {
 
     let id = req.query.id;
 
-    product.find(id).then(result => {
+    product.productFind(id).then(result => {
         res.json({
             ok: true,
             result
@@ -81,6 +81,14 @@ app.get('/product/find', function(req, res) {
             error: err
         });
     });
+
+});
+
+app.put('/product/update', function(req, res) {
+
+    let id = req.body.id;
+
+    //Continuar peticion del servicio de update
 
 });
 
