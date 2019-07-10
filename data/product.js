@@ -35,24 +35,81 @@ function productFind(id) {
 
 }
 
-// Crear una funcion de update que te permita tener varios tipos de update dependiendo de lo que se necesite
-// tipo 1: name, description y brand
-// tipo 2: cost y price
-// tipo 3: isactive
-// tipo 4: providerid
+
 
 let productCRUD = {
 
-    update: function(type, id, name, description, brand, cost, price, isactive, providerid) {
+    update: function(id, name, description, brand, cost, price, isactive, providerid, userreg) {
 
         return new Promise((resolve, reject) => {
-            let result = productFind(id)[0];
 
-            if (result) {
+            productFind(id).then(result => {
+                if (result === null) {
+                    reject('No existe un articulo con ese ID');
+                }
 
-            } else {
-                resolve(null);
-            }
+                let nameUpdate = result[0].name;
+                let desUpdate = result[0].description;
+                let brandUpdate = result[0].brand;
+                let costUpdate = result[0].cost;
+                let priceUpdate = result[0].price;
+                let isActUpdate = result[0].isactive;
+                let proviUpdate = result[0].providerid;
+                let userRegUpdate = result[0].userreg;
+
+                if (name) { nameUpdate = name };
+                if (description) { desUpdate = description };
+                if (brand) { brandUpdate = brand };
+                if (cost) { costUpdate = cost };
+                if (price) { priceUpdate = price };
+                if (isactive) { isActUpdate = isactive };
+                if (providerid) { proviUpdate = providerid };
+                if (userreg) { userRegUpdate = userreg };
+
+                let query = " UPDATE `INVENTARIO-VENTAS`.PRODUCTS " +
+                    " SET NAME = '" + nameUpdate + "'," +
+                    " DESCRIPTION = '" + desUpdate + "'," +
+                    " BRAND = '" + brandUpdate + "'," +
+                    " COST = " + costUpdate + "," +
+                    " PRICE = " + priceUpdate + "," +
+                    " ISACTIVE = '" + isActUpdate + "'," +
+                    " PROVIDERID = " + proviUpdate + "," +
+                    " USERREG = " + userRegUpdate + " " +
+                    " WHERE PRODUCTID = " + id + "";
+
+
+                connection.query(query,
+
+                    (err, resultset) => {
+                        if (err) {
+                            reject('Query error:' + err.stack);
+
+                        }
+
+                        if (resultset.affectedRows === 0) {
+                            resolve(null);
+                        }
+
+                        resolve({
+                            nameUpdate,
+                            desUpdate,
+                            brandUpdate,
+                            costUpdate,
+                            priceUpdate,
+                            isActUpdate,
+                            proviUpdate,
+                            userRegUpdate
+                        })
+
+                    });
+
+
+            }, (err) => {
+                reject({
+                    error: err.stack
+                })
+            });
+
 
         });
 

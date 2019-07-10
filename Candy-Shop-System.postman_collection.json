@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "19db83b2-9223-458b-bed2-8fc9a5da08ef",
+		"_postman_id": "c483c3df-e77d-49a6-af9e-67ad08d33903",
 		"name": "Candy-Shop-System",
 		"description": "Servicios para el sistema CandyShop System",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -72,7 +72,7 @@
 					}
 				],
 				"url": {
-					"raw": "localhost:3000/product/find?id=2",
+					"raw": "localhost:3000/product/find?id=10",
 					"host": [
 						"localhost"
 					],
@@ -84,7 +84,89 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "2"
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Products",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Andres",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "brand",
+							"value": "nuevo",
+							"type": "text"
+						},
+						{
+							"key": "cost",
+							"value": "1995",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "100",
+							"type": "text"
+						},
+						{
+							"key": "isactive",
+							"value": "Y",
+							"type": "text"
+						},
+						{
+							"key": "providerid",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "userreg",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/product/update",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"update"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
 						}
 					]
 				}
