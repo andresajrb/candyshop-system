@@ -94,7 +94,7 @@ app.put('/product/update', function(req, res) {
     let price = req.body.price;
     let isactive = req.body.isactive;
     let providerid = req.body.providerid;
-    let userreg = req.body.userreg
+    let userreg = req.body.userreg;
 
     product.productCRUD.update(id, name, description,
             brand, cost, price, isactive, providerid, userreg)
@@ -111,5 +111,34 @@ app.put('/product/update', function(req, res) {
         });
 
 });
+
+
+app.post('/product/create', function(req, res) {
+
+    let name = req.body.name;
+    let description = req.body.description;
+    let brand = req.body.brand;
+    let cost = req.body.cost;
+    let price = req.body.price;
+    let isactive = req.body.isactive;
+    let providerid = req.body.providerid;
+    let userreg = req.body.userreg;
+
+    product.productCRUD.insert(name, description,
+            brand, cost, price, isactive, providerid, userreg)
+        .then(result => {
+            res.json({
+                ok: true,
+                result
+            });
+        }, (err) => {
+            res.status(400).json({
+                ok: false,
+                error: err
+            });
+        });
+
+});
+
 
 module.exports = app;

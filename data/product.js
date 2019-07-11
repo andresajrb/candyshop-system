@@ -116,6 +116,18 @@ let productCRUD = {
 
 
 
+    },
+
+    insert: function(name, description, brand, cost, price, isactive, providerid, userreg) {
+
+        return new Promise((resolve, reject) => {
+            console.log('hello');
+            if (name === 'hello') {
+                reject('error de prueba')
+            }
+            resolve('continuidad de prueba');
+        });
+
     }
 }
 
