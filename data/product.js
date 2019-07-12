@@ -28,11 +28,7 @@ function productFind(id) {
                 }
                 resolve(result);
             });
-
-
-
     });
-
 }
 
 
@@ -84,9 +80,9 @@ let productCRUD = {
                 connection.query(query,
 
                     (err, resultset) => {
+
                         if (err) {
                             reject('Query error:' + err.stack);
-
                         }
 
                         if (resultset.affectedRows === 0) {
@@ -104,22 +100,14 @@ let productCRUD = {
                             userRegUpdate,
                             quantityUpdate
                         })
-
                     });
-
 
             }, (err) => {
                 reject({
                     error: err.stack
                 })
             });
-
-
         });
-
-
-
-
     },
 
     insert: function(name, description, brand, cost, price, isactive, providerid, userreg) {
@@ -137,7 +125,6 @@ let productCRUD = {
                 providerid + ", " +
                 userreg + ", " +
                 " 0, CURRENT_DATE, CURRENT_DATE) ";
-
 
             connection.query(query,
 
@@ -160,10 +147,53 @@ let productCRUD = {
 
                 });
         });
+    },
 
+    disable: function(id, mode) {
+
+        return new Promise((resolve, reject) => {
+
+            productFind(id).then(result => {
+                if (result === null) {
+                    reject('No existe un articulo con ese ID');
+                }
+
+                let query;
+
+                if (parseInt(mode) === 1) {
+                    query = " UPDATE `INVENTARIO-VENTAS`.PRODUCTS " +
+                        " SET ISACTIVE = 'N' " +
+                        " WHERE PRODUCTID = " + id + "";
+                } else {
+                    query = " UPDATE `INVENTARIO-VENTAS`.PRODUCTS " +
+                        " SET ISACTIVE = 'Y' " +
+                        " WHERE PRODUCTID = " + id + "";
+                }
+
+                connection.query(query,
+
+                    (err, resultset) => {
+                        if (err) {
+                            reject('Query error:' + err.stack);
+                        }
+
+                        if (resultset.affectedRows === 0) {
+                            resolve(null);
+                        }
+
+                        resolve({
+                            active: mode
+                        })
+                    });
+
+            }, (err) => {
+                reject({
+                    error: err.stack
+                })
+            });
+        });
     }
 }
-
 
 module.exports = {
     productFind,

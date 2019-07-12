@@ -142,11 +142,12 @@ app.post('/product/create', function(req, res) {
 });
 
 
-app.post('/product/disable', function(req, res) {
+app.put('/product/disable', function(req, res) {
 
     let id = req.body.id;
+    let mode = req.body.mode;
 
-    product.productCRUD.disable(id)
+    product.productCRUD.disable(id, mode)
         .then(result => {
             res.json({
                 ok: true,
