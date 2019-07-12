@@ -95,9 +95,10 @@ app.put('/product/update', function(req, res) {
     let isactive = req.body.isactive;
     let providerid = req.body.providerid;
     let userreg = req.body.userreg;
+    let quantity = req.body.quantity;
 
     product.productCRUD.update(id, name, description,
-            brand, cost, price, isactive, providerid, userreg)
+            brand, cost, price, isactive, providerid, userreg, quantity)
         .then(result => {
             res.json({
                 ok: true,
@@ -126,6 +127,26 @@ app.post('/product/create', function(req, res) {
 
     product.productCRUD.insert(name, description,
             brand, cost, price, isactive, providerid, userreg)
+        .then(result => {
+            res.json({
+                ok: true,
+                result
+            });
+        }, (err) => {
+            res.status(400).json({
+                ok: false,
+                error: err
+            });
+        });
+
+});
+
+
+app.post('/product/disable', function(req, res) {
+
+    let id = req.body.id;
+
+    product.productCRUD.disable(id)
         .then(result => {
             res.json({
                 ok: true,

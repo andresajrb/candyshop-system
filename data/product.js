@@ -39,7 +39,7 @@ function productFind(id) {
 
 let productCRUD = {
 
-    update: function(id, name, description, brand, cost, price, isactive, providerid, userreg) {
+    update: function(id, name, description, brand, cost, price, isactive, providerid, userreg, quantity) {
 
         return new Promise((resolve, reject) => {
 
@@ -56,6 +56,7 @@ let productCRUD = {
                 let isActUpdate = result[0].isactive;
                 let proviUpdate = result[0].providerid;
                 let userRegUpdate = result[0].userreg;
+                let quantityUpdate = result[0].quantity;
 
                 if (name) { nameUpdate = name };
                 if (description) { desUpdate = description };
@@ -65,6 +66,7 @@ let productCRUD = {
                 if (isactive) { isActUpdate = isactive };
                 if (providerid) { proviUpdate = providerid };
                 if (userreg) { userRegUpdate = userreg };
+                if (quantity) { quantityUpdate = quantity };
 
                 let query = " UPDATE `INVENTARIO-VENTAS`.PRODUCTS " +
                     " SET NAME = '" + nameUpdate + "'," +
@@ -74,7 +76,8 @@ let productCRUD = {
                     " PRICE = " + priceUpdate + "," +
                     " ISACTIVE = '" + isActUpdate + "'," +
                     " PROVIDERID = " + proviUpdate + "," +
-                    " USERREG = " + userRegUpdate + " " +
+                    " USERREG = " + userRegUpdate + " ," +
+                    " QUANTITY = " + quantityUpdate + " " +
                     " WHERE PRODUCTID = " + id + "";
 
 
@@ -98,7 +101,8 @@ let productCRUD = {
                             priceUpdate,
                             isActUpdate,
                             proviUpdate,
-                            userRegUpdate
+                            userRegUpdate,
+                            quantityUpdate
                         })
 
                     });
@@ -121,11 +125,40 @@ let productCRUD = {
     insert: function(name, description, brand, cost, price, isactive, providerid, userreg) {
 
         return new Promise((resolve, reject) => {
-            console.log('hello');
-            if (name === 'hello') {
-                reject('error de prueba')
-            }
-            resolve('continuidad de prueba');
+
+            let query = " INSERT INTO `INVENTARIO-VENTAS`.PRODUCTS " +
+                " ( NAME, DESCRIPTION, BRAND, COST, PRICE, ISACTIVE, PROVIDERID, USERREG, QUANTITY, DATEREG, DATEENTRY) " +
+                " VALUES( '" + name + "', " +
+                " '" + description + "', " +
+                " '" + brand + "', " +
+                cost + ", " +
+                price + ", " +
+                " 'Y', " +
+                providerid + ", " +
+                userreg + ", " +
+                " 0, CURRENT_DATE, CURRENT_DATE) ";
+
+
+            connection.query(query,
+
+                (err, resultset) => {
+                    if (err) {
+                        reject('Query error:' + err.stack);
+
+                    }
+                    console.log('El registro se inserto correctamente');
+
+                    resolve({
+                        name,
+                        description,
+                        brand,
+                        cost,
+                        price,
+                        providerid,
+                        userreg
+                    })
+
+                });
         });
 
     }
