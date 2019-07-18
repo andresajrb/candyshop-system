@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const login = require('../data/login');
 const product = require('../data/product');
+const Product = require('../data/productDAO');
 
 
 app.use(express.static(path.join(__dirname, '../public')));
@@ -68,9 +69,8 @@ app.get('/admin', function(req, res) {
 //CRUD PRODUCTS
 app.get('/product/find', function(req, res) {
 
-    let id = req.query.id;
 
-    product.productFind(id).then(result => {
+    Product.getProducts().then(result => {
         res.json({
             ok: true,
             result
@@ -84,32 +84,40 @@ app.get('/product/find', function(req, res) {
 
 });
 
+app.get('/product/findid', function(req, res) {
+
+    let id = req.query.id;
+
+    Product.getProductById(id).then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+});
+
 app.put('/product/update', function(req, res) {
 
-    let id = req.body.id;
-    let name = req.body.name;
-    let description = req.body.description;
-    let brand = req.body.brand;
-    let cost = req.body.cost;
-    let price = req.body.price;
-    let isactive = req.body.isactive;
-    let providerid = req.body.providerid;
-    let userreg = req.body.userreg;
-    let quantity = req.body.quantity;
+    let productUpdate = new Product();
 
-    product.productCRUD.update(id, name, description,
-            brand, cost, price, isactive, providerid, userreg, quantity)
-        .then(result => {
-            res.json({
-                ok: true,
-                result
-            });
-        }, (err) => {
-            res.status(400).json({
-                ok: false,
-                error: err
-            });
+    productUpdate.constructorServiceUpdateInsert(req);
+
+    productUpdate.update().then(result => {
+        res.json({
+            ok: true,
+            result
         });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
 
 });
 

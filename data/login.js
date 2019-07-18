@@ -1,4 +1,5 @@
-let connection = require('./connection');
+const connection = require('./connection');
+const queries_util = require('../utils/queries.util');
 
 let login = {
     // True - Encontro el usuario solicitado  False - No se encontro el usuario solicitadoS
@@ -6,8 +7,7 @@ let login = {
 
         return new Promise((resolve, reject) => {
 
-            connection.query('SELECT * FROM `inventario-ventas`.USERS WHERE USERNAME = "' +
-                username + '" AND PASSWORD = "' + password + '"',
+            connection.query(queries_util.loginAutentication, [username, password],
 
                 (err, resultset, fields) => {
                     if (err) {

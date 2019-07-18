@@ -1,123 +1,133 @@
--- MySQL dump 10.13  Distrib 5.5.62, for Win64 (AMD64)
---
--- Host: localhost    Database: inventario-ventas
--- ------------------------------------------------------
--- Server version	5.5.5-10.1.32-MariaDB
+create database inventiolite;
+use inventiolite;
+set sql_mode='';
+
+create table user(
+	id int not null auto_increment primary key,
+	name varchar(50),
+	lastname varchar(50),
+	username varchar(50),
+	email varchar(255),
+	password varchar(60),
+	image varchar(255),
+	is_active boolean not null default 1,
+	is_admin boolean not null default 0,
+	created_at datetime
+);
+
+insert into user(name,lastname,email,password,is_active,is_admin,created_at) value ("Administrador", "","admin","90b9aa7e25f80cf4f64e990b78a9fc5ebd6cecad",1,1,NOW());
+
+create table category(
+	id int not null auto_increment primary key,
+	image varchar(255),
+	name varchar(50),
+	description text,
+	created_at datetime
+);
+
+create table product(
+	id int not null auto_increment primary key,
+	image varchar(255),
+	barcode varchar(50),
+	name varchar(50),
+	description text,
+	inventary_min int default 10,
+	price_in float,
+	price_out float,
+	unit varchar(255),
+	presentation varchar(255),
+	user_id int,
+	category_id int,
+	created_at datetime,
+	is_active boolean default 1,
+	foreign key (category_id) references category(id),
+	foreign key (user_id) references user(id)
+);
+
+/*
+person kind
+1.- Client
+2.- Provider
+*/
+create table person(
+	id int not null auto_increment primary key,
+	image varchar(255),
+	name varchar(255),
+	lastname varchar(50),
+	company varchar(50),
+	address1 varchar(50),
+	address2 varchar(50),
+	phone1 varchar(50),
+	phone2 varchar(50),
+	email1 varchar(50),
+	email2 varchar(50),
+	kind int,
+	created_at datetime
+);
 
 
---
--- Table structure for table `users`
---
+create table operation_type(
+	id int not null auto_increment primary key,
+	name varchar(50)
+);
 
-CREATE TABLE `users` (
-  `userid` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8_spanish_ci NOT NULL DEFAULT '123456',
-  `name` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `role` varchar(100) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'USER',
-  `datereg` date DEFAULT NULL,
-  PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que almacena los usuarios del sistema'
+insert into operation_type (name) value ("entrada");
+insert into operation_type (name) value ("salida");
 
-
---
--- Table structure for table `providers`
---
-
-CREATE TABLE `providers` (
-  `providerid` int(11) NOT NULL AUTO_INCREMENT,
-  `fname` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `lname` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `address` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `fphone` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `lphone` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `email` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `identityp` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `isactive` char(1) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'Y',
-  `userreg` int(11) NOT NULL,
-  `datereg` date DEFAULT NULL,
-  PRIMARY KEY (`providerid`),
-  KEY `providers_users_fk` (`userreg`),
-  CONSTRAINT `providers_users_fk` FOREIGN KEY (`userreg`) REFERENCES `users` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los proveedores'
+create table box(
+	id int not null auto_increment primary key,
+	created_at datetime
+);
 
 
---
--- Table structure for table `clients`
---
+create table sell(
+	id int not null auto_increment primary key,
+	person_id int ,
+	user_id int ,
+	operation_type_id int default 2,
+	box_id int,
 
-CREATE TABLE `clients` (
-  `clientid` int(11) NOT NULL AUTO_INCREMENT,
-  `identityc` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `name` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `address` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `phone` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `email` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `userreg` int(11) DEFAULT NULL,
-  `datereg` date DEFAULT NULL,
-  PRIMARY KEY (`clientid`),
-  KEY `clients_users_fk` (`userreg`),
-  CONSTRAINT `clients_users_fk` FOREIGN KEY (`userreg`) REFERENCES `users` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los clientes'
+	total double,
+	cash double,
+	discount double,
 
---
--- Table structure for table `products`
---
+	foreign key (box_id) references box(id),
+	foreign key (operation_type_id) references operation_type(id),
+	foreign key (user_id) references user(id),
+	foreign key (person_id) references person(id),
+	created_at datetime
+);
 
-CREATE TABLE `products` (
-  `productid` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `brand` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `cost` double DEFAULT '0',
-  `price` double DEFAULT '0',
-  `isactive` char(1) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'Y',
-  `providerid` int(11) DEFAULT NULL,
-  `userreg` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT '0',
-  `datereg` date DEFAULT NULL,
-  `dateentry` date DEFAULT NULL,
-  PRIMARY KEY (`productid`),
-  KEY `products_fk` (`providerid`),
-  KEY `products_users_fk` (`userreg`),
-  CONSTRAINT `products_fk` FOREIGN KEY (`providerid`) REFERENCES `providers` (`providerid`),
-  CONSTRAINT `products_users_fk` FOREIGN KEY (`userreg`) REFERENCES `users` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra los productos'
+create table operation(
+	id int not null auto_increment primary key,
+	product_id int,
+	q float,
+	operation_type_id int,
+	sell_id int,
+	created_at datetime,
+	foreign key (product_id) references product(id),
+	foreign key (operation_type_id) references operation_type(id),
+	foreign key (sell_id) references sell(id)
+);
 
---
--- Table structure for table `hsale`
---
-
-CREATE TABLE `hsale` (
-  `hsaleid` int(11) NOT NULL AUTO_INCREMENT,
-  `datesale` date DEFAULT NULL,
-  `total` double NOT NULL DEFAULT '0',
-  `status` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `clientid` int(11) DEFAULT NULL,
-  `userreg` int(11) NOT NULL,
-  PRIMARY KEY (`hsaleid`),
-  KEY `hsale_fk` (`clientid`),
-  KEY `hsale_users_fk` (`userreg`),
-  CONSTRAINT `hsale_fk` FOREIGN KEY (`clientid`) REFERENCES `clients` (`clientid`),
-  CONSTRAINT `hsale_users_fk` FOREIGN KEY (`userreg`) REFERENCES `users` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
---
--- Table structure for table `dsale`
---
-
-CREATE TABLE `dsale` (
-  `dsaleid` int(11) NOT NULL AUTO_INCREMENT,
-  `quantity` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) DEFAULT NULL,
-  `hsaleid` int(11) DEFAULT NULL,
-  `productid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`dsaleid`),
-  KEY `dsale_fk` (`hsaleid`),
-  KEY `dsale_fk_1` (`productid`),
-  CONSTRAINT `dsale_fk` FOREIGN KEY (`hsaleid`) REFERENCES `hsale` (`hsaleid`),
-  CONSTRAINT `dsale_fk_1` FOREIGN KEY (`productid`) REFERENCES `products` (`productid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla que registra el detalle de las ventas';
-
+/*
+configuration kind
+1.- Boolean
+2.- Text
+3.- Number
+*/
+create table configuration(
+	id int not null auto_increment primary key,
+	short varchar(255) unique,
+	name varchar(255) unique,
+	kind int,
+	val varchar(255)
+);
+insert into configuration(short,name,kind,val) value("title","Titulo del Sistema",2,"Inventio Lite");
+insert into configuration(short,name,kind,val) value("use_image_product","Utilizar Imagenes en los productos",1,0);
+insert into configuration(short,name,kind,val) value("active_clients","Activar clientes",1,0);
+insert into configuration(short,name,kind,val) value("active_providers","Activar proveedores",1,0);
+insert into configuration(short,name,kind,val) value("active_categories","Activar categorias",1,0);
+insert into configuration(short,name,kind,val) value("active_reports_word","Activar reportes en Word",1,0);
+insert into configuration(short,name,kind,val) value("active_reports_excel","Activar reportes en Excel",1,0);
+insert into configuration(short,name,kind,val) value("active_reports_pdf","Activar reportes en PDF",1,0);

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c483c3df-e77d-49a6-af9e-67ad08d33903",
+		"_postman_id": "3d453e50-314c-4172-a494-680b48b3e1f6",
 		"name": "Candy-Shop-System",
 		"description": "Servicios para el sistema CandyShop System",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -23,12 +23,12 @@
 					"urlencoded": [
 						{
 							"key": "username",
-							"value": "Administrador",
+							"value": "admin",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "Administrador",
+							"value": "1234",
 							"type": "text"
 						},
 						{
@@ -66,13 +66,13 @@
 				"header": [
 					{
 						"key": "id",
-						"value": "2",
 						"type": "text",
+						"value": "2",
 						"disabled": true
 					}
 				],
 				"url": {
-					"raw": "localhost:3000/product/find?id=10",
+					"raw": "localhost:3000/product/find?",
 					"host": [
 						"localhost"
 					],
@@ -84,7 +84,8 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "10"
+							"value": "3",
+							"disabled": true
 						}
 					]
 				}
@@ -108,22 +109,121 @@
 					"urlencoded": [
 						{
 							"key": "id",
-							"value": "10",
+							"value": "1",
 							"type": "text"
 						},
 						{
-							"key": "name",
-							"value": "Andres",
-							"type": "text"
-						},
-						{
-							"key": "description",
+							"key": "image",
 							"value": "",
 							"type": "text"
 						},
 						{
+							"key": "barcode",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "KIT DE EMPACADURA NEON",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "KIT DE EMPACADURA NEON",
+							"type": "text"
+						},
+						{
+							"key": "inventary_min",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "price_in",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "price_out",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "unit",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "presentation",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/product/update?",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"update"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "10",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "Prueba1",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Prueba1",
+							"type": "text"
+						},
+						{
 							"key": "brand",
-							"value": "nuevo",
+							"value": "Prueba1",
 							"type": "text"
 						},
 						{
@@ -139,11 +239,12 @@
 						{
 							"key": "isactive",
 							"value": "Y",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "providerid",
-							"value": "",
+							"value": "2",
 							"type": "text"
 						},
 						{
@@ -154,19 +255,126 @@
 					]
 				},
 				"url": {
-					"raw": "localhost:3000/product/update",
+					"raw": "localhost:3000/product/create",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"product",
-						"update"
+						"create"
 					],
 					"query": [
 						{
-							"key": "",
-							"value": ""
+							"key": "id",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "brand",
+							"value": "nuevo",
+							"disabled": true
+						},
+						{
+							"key": "cost",
+							"value": "1995",
+							"disabled": true
+						},
+						{
+							"key": "price",
+							"value": "100",
+							"disabled": true
+						},
+						{
+							"key": "isactive",
+							"value": "Y",
+							"disabled": true
+						},
+						{
+							"key": "providerid",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "userreg",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable/ Able Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "mode",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/product/disable",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"disable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/product/findid?id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"findid"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
 						}
 					]
 				}
