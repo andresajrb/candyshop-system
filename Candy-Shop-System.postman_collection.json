@@ -72,14 +72,15 @@
 					}
 				],
 				"url": {
-					"raw": "localhost:3000/product/find?",
+					"raw": "localhost:3000/product/find/all?",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"product",
-						"find"
+						"find",
+						"all"
 					],
 					"query": [
 						{
@@ -124,12 +125,12 @@
 						},
 						{
 							"key": "name",
-							"value": "KIT DE EMPACADURA NEON",
+							"value": "KIT DE EMPACADURA SPARK",
 							"type": "text"
 						},
 						{
 							"key": "description",
-							"value": "KIT DE EMPACADURA NEON",
+							"value": "KIT DE EMPACADURA SPARK",
 							"type": "text"
 						},
 						{
@@ -206,51 +207,62 @@
 					"mode": "urlencoded",
 					"urlencoded": [
 						{
-							"key": "id",
-							"value": "10",
+							"key": "image",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "barcode",
+							"value": "",
 							"type": "text",
 							"disabled": true
 						},
 						{
 							"key": "name",
-							"value": "Prueba1",
+							"value": "kit de empacadura neon",
 							"type": "text"
 						},
 						{
 							"key": "description",
-							"value": "Prueba1",
+							"value": "kit de empacadura neon",
 							"type": "text"
 						},
 						{
-							"key": "brand",
-							"value": "Prueba1",
+							"key": "inventary_min",
+							"value": "",
 							"type": "text"
 						},
 						{
-							"key": "cost",
-							"value": "1995",
+							"key": "price_in",
+							"value": "",
 							"type": "text"
 						},
 						{
-							"key": "price",
-							"value": "100",
+							"key": "price_out",
+							"value": "",
 							"type": "text"
 						},
 						{
-							"key": "isactive",
-							"value": "Y",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "providerid",
-							"value": "2",
+							"key": "unit",
+							"value": "unidad",
 							"type": "text"
 						},
 						{
-							"key": "userreg",
+							"key": "presentation",
+							"value": "unidad",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
 							"value": "1",
 							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
@@ -263,53 +275,6 @@
 					"path": [
 						"product",
 						"create"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "10",
-							"disabled": true
-						},
-						{
-							"key": "name",
-							"value": "",
-							"disabled": true
-						},
-						{
-							"key": "description",
-							"value": "",
-							"disabled": true
-						},
-						{
-							"key": "brand",
-							"value": "nuevo",
-							"disabled": true
-						},
-						{
-							"key": "cost",
-							"value": "1995",
-							"disabled": true
-						},
-						{
-							"key": "price",
-							"value": "100",
-							"disabled": true
-						},
-						{
-							"key": "isactive",
-							"value": "Y",
-							"disabled": true
-						},
-						{
-							"key": "providerid",
-							"value": "",
-							"disabled": true
-						},
-						{
-							"key": "userreg",
-							"value": "1",
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -332,12 +297,12 @@
 					"urlencoded": [
 						{
 							"key": "id",
-							"value": "3",
+							"value": "1",
 							"type": "text"
 						},
 						{
 							"key": "mode",
-							"value": "2",
+							"value": "1",
 							"type": "text"
 						}
 					]
@@ -362,20 +327,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3000/product/findid?id=1",
+					"raw": "localhost:3000/product/find/1",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"product",
-						"findid"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "1"
-						}
+						"find",
+						"1"
 					]
 				}
 			},
