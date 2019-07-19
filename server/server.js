@@ -67,10 +67,11 @@ app.get('/admin', function(req, res) {
 });
 
 //CRUD PRODUCTS
-app.get('/product/find', function(req, res) {
+app.get('/product/find/all', function(req, res) {
 
+    let productFind = new Product();
 
-    Product.getProducts().then(result => {
+    productFind.getProducts().then(result => {
         res.json({
             ok: true,
             result
@@ -84,11 +85,12 @@ app.get('/product/find', function(req, res) {
 
 });
 
-app.get('/product/findid', function(req, res) {
+app.get('/product/find/:id', function(req, res) {
 
-    let id = req.query.id;
+    let id = req.params.id;
+    let productFind = new Product();
 
-    Product.getProductById(id).then(result => {
+    productFind.getProductById(id).then(result => {
         res.json({
             ok: true,
             result
@@ -124,38 +126,35 @@ app.put('/product/update', function(req, res) {
 
 app.post('/product/create', function(req, res) {
 
-    let name = req.body.name;
-    let description = req.body.description;
-    let brand = req.body.brand;
-    let cost = req.body.cost;
-    let price = req.body.price;
-    let isactive = req.body.isactive;
-    let providerid = req.body.providerid;
-    let userreg = req.body.userreg;
+    let productInsert = new Product();
 
-    product.productCRUD.insert(name, description,
-            brand, cost, price, isactive, providerid, userreg)
-        .then(result => {
-            res.json({
-                ok: true,
-                result
-            });
-        }, (err) => {
-            res.status(400).json({
-                ok: false,
-                error: err
-            });
+    productInsert.constructorServiceUpdateInsert(req);
+
+    productInsert.insert().then(result => {
+        res.json({
+            ok: true,
+            result
         });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
 
 });
 
 
 app.put('/product/disable', function(req, res) {
 
+    let productDisable = new Product();
+
     let id = req.body.id;
     let mode = req.body.mode;
 
-    product.productCRUD.disable(id, mode)
+    productDisable.id = id;
+
+    productDisable.disable(mode)
         .then(result => {
             res.json({
                 ok: true,
