@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3d453e50-314c-4172-a494-680b48b3e1f6",
+		"_postman_id": "4ca34171-d819-4b50-b2f2-d915a136e72a",
 		"name": "Candy-Shop-System",
 		"description": "Servicios para el sistema CandyShop System",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -72,7 +72,7 @@
 					}
 				],
 				"url": {
-					"raw": "localhost:3000/product/find/all?",
+					"raw": "localhost:3000/product/find/all",
 					"host": [
 						"localhost"
 					],
@@ -220,12 +220,12 @@
 						},
 						{
 							"key": "name",
-							"value": "kit de empacadura neon",
+							"value": "kit de empacadura twingo",
 							"type": "text"
 						},
 						{
 							"key": "description",
-							"value": "kit de empacadura neon",
+							"value": "kit de empacadura twingo",
 							"type": "text"
 						},
 						{
@@ -327,7 +327,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:3000/product/find/1",
+					"raw": "localhost:3000/product/find/id/1",
 					"host": [
 						"localhost"
 					],
@@ -335,6 +335,69 @@
 					"path": [
 						"product",
 						"find",
+						"id",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get active products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/product/find/active",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"find",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product by category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/product/find/category/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"find",
+						"category",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get product by user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/product/find/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"product",
+						"find",
+						"user",
 						"1"
 					]
 				}

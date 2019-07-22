@@ -3,7 +3,6 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const login = require('../data/login');
-const product = require('../data/product');
 const Product = require('../data/productDAO');
 
 
@@ -85,12 +84,66 @@ app.get('/product/find/all', function(req, res) {
 
 });
 
-app.get('/product/find/:id', function(req, res) {
+app.get('/product/find/active', function(req, res) {
+
+    let productFind = new Product();
+
+    productFind.getActiveProducts().then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+
+});
+
+app.get('/product/find/id/:id', function(req, res) {
 
     let id = req.params.id;
     let productFind = new Product();
 
     productFind.getProductById(id).then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+});
+
+app.get('/product/find/category/:category', function(req, res) {
+
+    let category_id = req.params.category_id;
+    let productFind = new Product();
+
+    productFind.getProductByCategory(category_id).then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+});
+
+app.get('/product/find/user/:user', function(req, res) {
+
+    let user_id = req.params.user_id;
+    let productFind = new Product();
+
+    productFind.getProductByUser(user_id).then(result => {
         res.json({
             ok: true,
             result

@@ -39,13 +39,13 @@ module.exports = class Product {
         this.id = id;
         this.image = image;
         this.barcode = barcode;
-        this.name = req.body.name.toUpperCase()
-        this.description = req.body.description.toUpperCase()
-        this.inventary_min = req.body.inventary_min
-        this.price_in = req.body.price_in
-        this.price_out = req.body.price_out
-        this.unit = req.body.unit.toUpperCase()
-        this.presentation = req.body.presentation.toUpperCase()
+        this.name = name.toUpperCase();
+        this.description = description.toUpperCase();
+        this.inventary_min = inventary_min;
+        this.price_in = price_in;
+        this.price_out = price_out;
+        this.unit = unit.toUpperCase();
+        this.presentation = presentation.toUpperCase();
         this.user_id = user_id;
         this.category_id = category_id;
     }
@@ -73,9 +73,6 @@ module.exports = class Product {
                     }
                     resolve(result);
                 });
-
-
-
         });
     }
 
@@ -86,6 +83,82 @@ module.exports = class Product {
         return new Promise((resolve, reject) => {
 
             connection.query(queries_util.getProductById, [id],
+
+                (err, resultset, fields) => {
+                    if (err) {
+                        reject('Query error:' + err.stack);
+
+                    }
+                    // Resultado en formato JSON
+                    let result = JSON.parse(JSON.stringify(resultset));
+
+                    // Si no se encuentra el usuario solicitado
+                    if (Object.keys(result).length === 0) {
+                        resolve(null);
+                    }
+                    resolve(result);
+                });
+        });
+    }
+
+    /**
+     * Return a Promise with all products in the Product Table filtering by Category
+     */
+    getProductByCategory(category_id) {
+        return new Promise((resolve, reject) => {
+
+            connection.query(queries_util.getProductByCategory, [category_id],
+
+                (err, resultset, fields) => {
+                    if (err) {
+                        reject('Query error:' + err.stack);
+
+                    }
+                    // Resultado en formato JSON
+                    let result = JSON.parse(JSON.stringify(resultset));
+
+                    // Si no se encuentra el usuario solicitado
+                    if (Object.keys(result).length === 0) {
+                        resolve(null);
+                    }
+                    resolve(result);
+                });
+        });
+    }
+
+    /**
+     * Return a Promise with all products in the Product Table filtering by User
+     */
+    getProductByUser(user_id) {
+        return new Promise((resolve, reject) => {
+
+            connection.query(queries_util.getProductByUser, [user_id],
+
+                (err, resultset, fields) => {
+                    if (err) {
+                        reject('Query error:' + err.stack);
+
+                    }
+                    // Resultado en formato JSON
+                    let result = JSON.parse(JSON.stringify(resultset));
+
+                    // Si no se encuentra el usuario solicitado
+                    if (Object.keys(result).length === 0) {
+                        resolve(null);
+                    }
+                    resolve(result);
+                });
+        });
+    }
+
+    /**
+     * Return a Promise with all actives products in the Product Table
+     */
+    getActiveProducts() {
+        return new Promise((resolve, reject) => {
+
+
+            connection.query(queries_util.getActiveProducts,
 
                 (err, resultset, fields) => {
                     if (err) {
@@ -204,12 +277,14 @@ module.exports = class Product {
                         category_id: this.category_id
                     })
 
-
                 });
         });
 
     }
 
+    /**
+     * Disable or Enable a single Product
+     */
     disable(mode) {
         return new Promise((resolve, reject) => {
 
@@ -242,7 +317,6 @@ module.exports = class Product {
                         } else {
                             reject('Error al actualizar registro');
                         }
-
                     });
 
             }, (err) => {
