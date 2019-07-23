@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const login = require('../data/login');
 const Product = require('../data/productDAO');
+const Category = require('../data/categoryDAO');
 
 
 app.use(express.static(path.join(__dirname, '../public')));
@@ -59,13 +60,15 @@ app.post('/logging', function(req, res) {
 
 });
 
-
+/** Ingreso al panel principal */
 app.get('/admin', function(req, res) {
 
     res.sendFile(path.join(__dirname, "../public", "admin.html"));
 });
 
-//CRUD PRODUCTS
+/********************************************************************** */
+//************************** */PRODUCT SERVICES ************************
+/********************************************************************** */
 app.get('/product/find/all', function(req, res) {
 
     let productFind = new Product();
@@ -219,6 +222,86 @@ app.put('/product/disable', function(req, res) {
                 error: err
             });
         });
+
+});
+
+/********************************************************************** */
+//************************** */CATEGORY SERVICES *************************
+/********************************************************************** */
+app.get('/category/find/all', function(req, res) {
+
+    let categoryFind = new Category();
+
+    categoryFind.getCategories().then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+
+});
+
+app.get('/category/find/id/:id', function(req, res) {
+
+    let id = req.params.id;
+    let categoryFind = new Category();
+
+    categoryFind.getCategoryById(id).then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+
+});
+
+app.put('/category/update', function(req, res) {
+
+    let categoryUpdate = new Category();
+
+    categoryUpdate.constructorServiceUpdateInsert(req);
+
+    categoryUpdate.update().then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+
+});
+
+app.post('/category/create', function(req, res) {
+
+    let categoryInsert = new Category();
+
+    categoryInsert.constructorServiceUpdateInsert(req);
+
+    categoryInsert.insert().then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
 
 });
 

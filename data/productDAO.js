@@ -262,7 +262,6 @@ module.exports = class Product {
                         reject('Query error:' + err.stack);
                     }
 
-
                     resolve({
                         image: this.image,
                         barcode: this.barcode,
