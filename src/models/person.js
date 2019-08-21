@@ -1,53 +1,62 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../server/connection2');
-const Model = Sequelize.Model;
+/* jshint indent: 2 */
 
-class Person extends Model {}
-Person.init({
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define('person', {
+    id: {
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
     image: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
     name: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
     lastname: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     company: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     address1: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     address2: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     phone1: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     phone2: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     email1: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     email2: {
-        type: Sequelize.STRING
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     kind: {
-        type: Sequelize.INTEGER
+      type: DataTypes.INTEGER(11),
+      allowNull: true
     },
     created_at: {
-        type: Sequelize.DATE
+      type: DataTypes.DATE,
+      allowNull: true
     }
-}, {
-    sequelize,
-    modelName: 'person',
-    freezeTableName: true,
-    timestamps: false
-
-});
-
-Person.sync();
-
-module.exports = Person;
+  }, {
+    tableName: 'person'
+  });
+};

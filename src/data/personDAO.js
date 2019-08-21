@@ -1,7 +1,10 @@
-const connection = require('./connection');
+const connection = require('../server/connection');
 const queries_util = require('../utils/queries.util');
+const { sequelize, Sequelize } = require('../server/connection2');
+const Model = require('../models/person');
+const Person = Model(sequelize, Sequelize.DataType);
 
-module.exports = class Person {
+module.exports = class PersonDAO {
     /**
      * @ Class Constructor
      */
@@ -49,29 +52,46 @@ module.exports = class Person {
         this.kind = req.body.kind;
     }
 
+    getAttributes(this) {
+
+        let obj = {
+            image: this.image,
+            name: this.name,
+            lastname: this.lastname,
+            company: this.company,
+            address1: this.address1,
+            address2: this.address2,
+            phone1: this.phone1,
+            phone2: this.phone2,
+            email1: this.email1,
+            email2: this.email2,
+            kind: this.kind
+        }
+
+        return obj;
+    }
+
     /**
      * Return a Promise with all products in the Product Table
      */
     getPersons() {
         return new Promise((resolve, reject) => {
 
+            Person.findAll().then(resultset => {
 
-            connection.query(queries_util.getPerson,
+                // Resultado en formato JSON
+                let result = JSON.parse(JSON.stringify(resultset));
 
-                (err, resultset, fields) => {
-                    if (err) {
-                        reject('Query error:' + err.stack);
+                // Si no se encuentra el objeto solicitado
+                if (Object.keys(result).length === 0) {
+                    resolve(null);
+                }
 
-                    }
-                    // Resultado en formato JSON
-                    let result = JSON.parse(JSON.stringify(resultset));
+                resolve(result);
 
-                    // Si no se encuentra el objeto solicitado
-                    if (Object.keys(result).length === 0) {
-                        resolve(null);
-                    }
-                    resolve(result);
-                });
+            }).catch(err => {
+                reject('Model query error:' + err.stack);
+            });
         });
     }
 
@@ -81,22 +101,24 @@ module.exports = class Person {
     getPersonById(id) {
         return new Promise((resolve, reject) => {
 
-            connection.query(queries_util.getPersonById, [id],
+            Person.findAll({
+                where: {
+                    id: id
+                }
+            }).then(resultset => {
 
-                (err, resultset, fields) => {
-                    if (err) {
-                        reject('Query error:' + err.stack);
+                // Resultado en formato JSON
+                let result = JSON.parse(JSON.stringify(resultset));
 
-                    }
-                    // Resultado en formato JSON
-                    let result = JSON.parse(JSON.stringify(resultset));
+                // Si no se encuentra el objeto solicitado
+                if (Object.keys(result).length === 0) {
+                    resolve(null);
+                }
+                resolve(result);
 
-                    // Si no se encuentra el objeto solicitado
-                    if (Object.keys(result).length === 0) {
-                        resolve(null);
-                    }
-                    resolve(result);
-                });
+            }).catch(err => {
+                reject('Model query error:' + err.stack);
+            });
         });
     }
 
@@ -106,23 +128,25 @@ module.exports = class Person {
     getClients() {
         return new Promise((resolve, reject) => {
 
+            Person.findAll({
+                where: {
+                    kind: 1
+                }
+            }).then(resultset => {
 
-            connection.query(queries_util.getClients,
+                // Resultado en formato JSON
+                let result = JSON.parse(JSON.stringify(resultset));
 
-                (err, resultset, fields) => {
-                    if (err) {
-                        reject('Query error:' + err.stack);
+                // Si no se encuentra el objeto solicitado
+                if (Object.keys(result).length === 0) {
+                    resolve(null);
+                }
+                resolve(result);
 
-                    }
-                    // Resultado en formato JSON
-                    let result = JSON.parse(JSON.stringify(resultset));
+            }).catch(err => {
+                reject('Query error:' + err.stack);
+            });
 
-                    // Si no se encuentra el objeto solicitado
-                    if (Object.keys(result).length === 0) {
-                        resolve(null);
-                    }
-                    resolve(result);
-                });
         });
     }
 
@@ -132,23 +156,25 @@ module.exports = class Person {
     getProviders() {
         return new Promise((resolve, reject) => {
 
+            Person.findAll({
+                where: {
+                    kind: 2
+                }
+            }).then(resultset => {
 
-            connection.query(queries_util.getProviders,
+                // Resultado en formato JSON
+                let result = JSON.parse(JSON.stringify(resultset));
 
-                (err, resultset, fields) => {
-                    if (err) {
-                        reject('Query error:' + err.stack);
+                // Si no se encuentra el objeto solicitado
+                if (Object.keys(result).length === 0) {
+                    resolve(null);
+                }
+                resolve(result);
 
-                    }
-                    // Resultado en formato JSON
-                    let result = JSON.parse(JSON.stringify(resultset));
+            }).catch(err => {
+                reject('Query error:' + err.stack);
+            });
 
-                    // Si no se encuentra el objeto solicitado
-                    if (Object.keys(result).length === 0) {
-                        resolve(null);
-                    }
-                    resolve(result);
-                });
         });
     }
 
@@ -189,37 +215,29 @@ module.exports = class Person {
                 if (this.email2) { email2Update = this.email2 };
                 if (this.kind) { kindUpdate = this.kind };
 
-                connection.query(queries_util.updatePerson, [imageUpdate, nameUpdate, lastnameUpdate, companyUpdate, address1Update,
-                        address2Update, phone1Update, phone2Update, email1Update, email2Update, kindUpdate, this.id
-                    ],
 
-                    (err, resultset) => {
+                Person.update({
+                    image: imageUpdate,
+                    name: nameUpdate,
+                    lastname: lastnameUpdate,
+                    company: companyUpdate,
+                    address1: address1Update,
+                    address2: address2Update,
+                    phone1: phone1Update,
+                    phone2: phone2Update,
+                    email1: email1Update,
+                    email2: email2Update,
+                    kind: kindUpdate
 
-                        if (err) {
-                            reject('Query error:' + err.stack);
-                        }
-
-                        if (resultset) {
-                            if (resultset.affectedRows === 0) {
-                                resolve(null);
-                            }
-
-                            resolve({
-                                id: this.id,
-                                name: this.name,
-                                description: this.description
-                            })
-
-                        } else {
-                            reject('Error al actualizar registro');
-                        }
-
+                }).then(() => {
+                    resolve({
+                        message: `La persona ${nameUpdate} ${lastnameUpdate} fue editado exitosamente`
                     });
+                }).catch(err => {
+                    reject('Error al actualizar registro');
+                });
 
-            }, (err) => {
-                reject({
-                    error: err.stack
-                })
+
             });
         });
     }
@@ -231,31 +249,15 @@ module.exports = class Person {
 
         return new Promise((resolve, reject) => {
 
-            connection.query(queries_util.insertPerson, [this.image, this.name, this.lastname, this.company, this.address1,
-                    this.address2, this.phone1, this.phone2, this.email1, this.email2, this.kind
-                ],
-
-                (err, resultset) => {
-                    if (err) {
-                        reject('Query error:' + err.stack);
-                    }
-
-                    resolve({
-                        image: this.image,
-                        name: this.name,
-                        lastname: this.lastname,
-                        company: this.company,
-                        address1: this.address1,
-                        address2: this.address2,
-                        phone1: this.phone1,
-                        phone2: this.phone2,
-                        email1: this.email1,
-                        email2: this.email2,
-                        kind: this.kind
-                    })
-
-
+            Person.create(this.getAttributes()).then(() => {
+                resolve({
+                    message: `La persona ${this.getAttributes().name} ${this.getAttributes().lastname} fue agregada exitosamente`
                 });
+            }).catch(err => {
+                reject('Error al insertar registro');
+            })
+
+
         });
 
     }

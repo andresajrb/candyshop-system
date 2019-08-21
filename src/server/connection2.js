@@ -14,4 +14,4 @@ sequelize.authenticate()
         console.log('Error en la conexion 2 de la base de datos', err);
     });
 
-module.exports = sequelize;
+module.exports = { sequelize, Sequelize };
