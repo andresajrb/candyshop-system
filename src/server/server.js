@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const login = require('../data/login');
 const Product = require('../data/productDAO');
 const Category = require('../data/categoryDAO');
+const Person = require('../models/personDAO');
 
 
 app.use(express.static(path.join(__dirname, '../public')));
@@ -304,6 +305,26 @@ app.post('/category/create', function(req, res) {
     });
 
 });
+
+app.get('/person/findall', function(req, res) {
+
+
+
+    Person.findAll().then(result => {
+        res.json({
+            ok: true,
+            result
+        });
+    }, (err) => {
+        res.status(400).json({
+            ok: false,
+            error: err
+        });
+    });
+
+});
+
+
 
 
 module.exports = app;

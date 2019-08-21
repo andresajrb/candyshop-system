@@ -1,4 +1,4 @@
-let connection = require('./connection');
+const connection = require('./connection');
 const queries_util = require('../utils/queries.util');
 
 module.exports = class Person {
